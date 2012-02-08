@@ -35,13 +35,12 @@ public class CryptoActivity extends Activity implements OnClickListener {
     static String CRYPT_SEED = "hoge";
 	@Override
 	public void onClick(View v) {
-		
 		switch (v.getId()) {
 		case R.id.encryptButton:
-			Editable plain = plainText.getText();
-			if (plain != null) {
+			String plain = plainText.getText().toString();
+			if (plain.length() > 0) {
 				try {
-					encryptedText.setText(Crypto.encrypt(CRYPT_SEED, plain.toString()));
+					encryptedText.setText(Crypto.encrypt(CRYPT_SEED, plain));
 					plainText.setText("");
 					InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(plainText.getWindowToken(), 0);
@@ -54,10 +53,10 @@ public class CryptoActivity extends Activity implements OnClickListener {
 			}
 			break;
 		case R.id.decryptButton:
-			Editable encrypted = encryptedText.getText();
-			if (encrypted != null) {
+			String encrypted = encryptedText.getText().toString();
+			if (encrypted.length() > 0) {
 				try {
-					plainText.setText(Crypto.decrypt(CRYPT_SEED, encrypted.toString()));
+					plainText.setText(Crypto.decrypt(CRYPT_SEED, encrypted));
 					encryptedText.setText("");
 					InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(encryptedText.getWindowToken(), 0);
